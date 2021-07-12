@@ -44,7 +44,6 @@ var a2_data = {
     fill: false,
     borderColor: 'blue',
     borderWidth: 1.5
-
 }
 
 const data = {
