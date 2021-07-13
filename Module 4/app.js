@@ -36,7 +36,7 @@ var a1_data = {
     lineTension: 0.5,
     fill: false,
     borderColor: 'red',
-    borderWidth: 1.5
+    borderWidth: 0.8
 }
 var a2_data = {
     label: "A2",

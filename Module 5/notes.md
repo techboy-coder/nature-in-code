@@ -1,0 +1,3 @@
+- Individual can only mate with partner in distance d on a N x M Grid
+- Calculate Probs of Alleles variations
+- Repeat for g generations
