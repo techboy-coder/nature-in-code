@@ -26,6 +26,17 @@ function app(){
     return arr;
     }
 
+    Array.prototype.remove = function() {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
+
     function num_Unique(array){
         var u = array.map(JSON.stringify)
         return u.unique().length
@@ -42,7 +53,8 @@ function app(){
         for (let j = 0; j < clones.length; j++){
             clones[j]=clones[j].map((base)=>{
                 if (Math.random() < mutation_rate){
-                    return rand_base()
+                    let mybase = BASES.remove(base)
+                    return mybase[Math.floor(Math.random() * mybase.length)]
                 }
                 return base
             })
