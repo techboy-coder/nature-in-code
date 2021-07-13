@@ -10,8 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     
 </head>
-<body class="container">
-
+<body class="container pt-4">
+  <form action="" id="input" class="pb-4">
+    <label for="len">DNA length</label>
+    <input type="number" name="len" id="len" placeholder="100" value="100">
+    <label for="generations">Number of generations</label>
+    <input type="number" name="generations" id="generations" placeholder="100" value="100">
+    <label for="clones">Number of clones</label>
+    <input type="number" name="clones" id="clones" placeholder="100" value="100">
+    <label for="mutations">mutations</label>
+    <input type="number" name="mutations" id="mutations" placeholder="100" value="0.001" step="0.000000001">
+</form>
+<button type="button" onclick="app();">Run Simulation</button>
+<canvas id="myChart"></canvas>
   <script src="app.js"></script>
 </body>
 </html>
