@@ -162,6 +162,8 @@ show_drift_graph = (id, a1_series, a2_series) => {
           d3.selectAll(".post").style("fill","#00ff00");
           d3.selectAll(".neutral").style("fill","#808080");
           d3.selectAll(".unneutral").style("fill","#d3d3d3");
+          d3.selectAll(".vaccine").style("fill","#0000ff");
+          d3.selectAll(".double").style("fill","#800000");
       }
       else {
           for (var i = 0; i < colors.length; i = i + 2) {
