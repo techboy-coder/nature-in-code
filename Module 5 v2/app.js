@@ -1,9 +1,9 @@
 function main(){
 
-    const N_CLONES = 10000
+    const N_CLONES = 3000
     const a1_prob = 0.2
     const a2_prob = 1 - a1_prob
-    const N_GEN = 180000
+    const N_GEN = 500
     const D = 1
     const gridx = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
     const gridy = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
