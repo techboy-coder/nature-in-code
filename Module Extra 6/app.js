@@ -1,9 +1,12 @@
 function main(){
 
     const N_CLONES = 40**2
-    const a1_prob = 0.5
-    const a2_prob = 1 - a1_prob
-    const N_GEN = 150000
+    const N_GEN = 50000
+    const infect_rate = 0.00005
+    const initial_infection_rate = 0.001
+    const transmission_rate = 0.6
+    const infected_time = 5
+    const post_time=30
     const D = 1
     const gridx = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
     const gridy = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
@@ -19,20 +22,12 @@ function main(){
     }
 
     for (let i = 0; i < N_CLONES; i++){
-        if (Math.random() < a1_prob){
-            grid[i].v1 = 1
-            if (Math.random() < a1_prob){
-                grid[i].v2 = 1
-            }else{
-                grid[i].v2 = 2
-            }
+        if (Math.random() < initial_infection_rate){
+            grid[i].type = "infected"
+            grid[i].infected_time = 0
         }else{
-            grid[i].v1 = 2
-            if (Math.random() < a1_prob){
-                grid[i].v2 = 1
-            }else{
-                grid[i].v2 = 2
-            }
+            grid[i].type = "neutral"
+            grid[i].infected_time = 0
         }
     }
     function getRandomInt(min, max) {
@@ -49,6 +44,7 @@ function main(){
     //INIT Done
     for (let i = 0; i <N_GEN; i++){
         setTimeout(()=>{
+            document.getElementById("day_count").innerHTML = `${i}/${N_GEN}`
             var visual = []
             var new_grid=[]
             for (let j = 0; j < grid.length; j++){
@@ -61,12 +57,37 @@ function main(){
                         break
                     }
                 }
-    
-                var {v1,v2}=grid[j]
-                var pos=[[v1,your_mate[0].v1],[v1, your_mate[0].v2],[v2,your_mate[0].v1],[v2,your_mate[0].v2]]
-                var combinations = pos[Math.floor(Math.random() * pos.length)]
-                var offspring = {x:grid[j].x,y:grid[j].y,v1: combinations[0], v2: combinations[1]}
-                new_grid.push(offspring)
+                your_mate=your_mate[0]
+                // console.log(JSON.stringify(your_mate));
+                var you = grid[j]
+                if (Math.random() < infect_rate && you.type == "neutral"){
+                    you.type = "infected"
+                }
+                if (your_mate.type == "infected" && you.type=="neutral" && Math.random() < transmission_rate){
+                    you.type = "infected"
+                }
+                if (Math.random() < infect_rate && you.type == "unneutral"){
+                    you.type = "infected"
+                }
+                if (your_mate.type == "infected" && you.type=="unneutral" && Math.random() < transmission_rate){
+                    you.type = "infected"
+                }
+                if (you.type == "infected"){
+                    you.infected_time++
+                }
+                if (you.type == "infected" && you.infected_time == infected_time){
+                    you.type = "post"
+                }
+                if (you.type =="post"){
+                    you.infected_time++
+
+                    if (you.infected_time==infected_time+post_time){
+                        you.type = "unneutral"
+                        you.infected_time=0
+                    }
+                }
+                new_grid.push(you)
+
             }
             grid=new_grid
             var visual = []
@@ -77,22 +98,24 @@ function main(){
                         return el.x == i && el.y == j
                     })[0]
                     
-                    
-                    if (el.v1 == 1 && el.v2 == 1){
-                        row.push("A1A1")
+                    if (el.type=="neutral"){
+                        row.push("neutral")
                     }
-                    if((el.v1 == 1 && el.v2 == 2) || (el.v1 == 2 && el.v2 == 1)){
-                        row.push("A1A2")
+                    if (el.type=="infected"){
+                        row.push("infected")
                     }
-                    if (el.v1 == 2 && el.v2 == 2){
-                        row.push("A2A2")
+                    if (el.type=="post"){
+                        row.push("post")
                     }
-                    
+                    if (el.type=="unneutral"){
+                        row.push("unneutral")
+                    }
+
                 }
                 visual.push(row)
             };
             update_grid(visual)
-        }, 10)
+        }, 1)
     }
 
 

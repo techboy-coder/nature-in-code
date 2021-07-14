@@ -1,9 +1,9 @@
 function main(){
 
-    const N_CLONES = 40**2
+    const N_CLONES = 100
     const a1_prob = 0.5
     const a2_prob = 1 - a1_prob
-    const N_GEN = 150000
+    const N_GEN = 1
     const D = 1
     const gridx = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
     const gridy = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
@@ -35,6 +35,7 @@ function main(){
             }
         }
     }
+    console.log(JSON.stringify(grid));
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -48,51 +49,21 @@ function main(){
 
     //INIT Done
     for (let i = 0; i <N_GEN; i++){
-        setTimeout(()=>{
-            var visual = []
-            var new_grid=[]
-            for (let j = 0; j < grid.length; j++){
-                while (true) {
-                    var [x,y]=random_position(grid[j].x, grid[j].y)
-                    var your_mate = grid.filter((el)=>{
-                        return el.x == x && el.y == y;
-                    })
-                    if (your_mate[0]){
-                        break
-                    }
-                }
-    
-                var {v1,v2}=grid[j]
-                var pos=[[v1,your_mate[0].v1],[v1, your_mate[0].v2],[v2,your_mate[0].v1],[v2,your_mate[0].v2]]
-                var combinations = pos[Math.floor(Math.random() * pos.length)]
-                var offspring = {x:grid[j].x,y:grid[j].y,v1: combinations[0], v2: combinations[1]}
-                new_grid.push(offspring)
-            }
-            grid=new_grid
-            var visual = []
-            for (let i = 0; i < gridx; i++){
-                var row = []
-                for (let j = 0; j < gridy; j++){
-                    var el = grid.filter((el)=>{
-                        return el.x == i && el.y == j
-                    })[0]
-                    
-                    
-                    if (el.v1 == 1 && el.v2 == 1){
-                        row.push("A1A1")
-                    }
-                    if((el.v1 == 1 && el.v2 == 2) || (el.v1 == 2 && el.v2 == 1)){
-                        row.push("A1A2")
-                    }
-                    if (el.v1 == 2 && el.v2 == 2){
-                        row.push("A2A2")
-                    }
-                    
-                }
-                visual.push(row)
-            };
-            update_grid(visual)
-        }, 10)
+        var visual = []
+        var new_grid=[]
+        for (let j = 0; j < grid.length; j++){
+            var [x,y]=random_position(grid[j].x, grid[j].y)
+            var your_mate = grid.filter((el)=>{
+                return el.x == x && el.y == y;
+            })
+            var {v1,v2}=grid[j]
+            var pos=[[v1,your_mate[0].v1],[v1, your_mate[0].v2],[v2,your_mate[0].v1],[v2,your_mate[0].v2]]
+            var combinations = pos[Math.floor(Math.random() * pos.length)]
+            var offspring = {x:grid[j].x,y:grid[j].y,v1: combinations[0], v2: combinations[1]}
+            new_grid.push(offspring)
+        }
+        grid=new_grid
+        
     }
 
 
