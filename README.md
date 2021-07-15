@@ -2,6 +2,9 @@
 
 This a repo contains the projects and code for the summer camp in EPFL, Laussane.
 It was created in a summer camp called "biology in code". 
+
+Feel free to fork this repo or make a new branch. 
+
 ## Photos:
 
 ### Module 1:
