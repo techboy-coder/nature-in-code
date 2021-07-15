@@ -1,17 +1,17 @@
 function main(){
 
-    const N_CLONES = 45**2
+    const N_CLONES = 42**2
     const N_GEN = 50000
-    const infect_rate = 0.0002
-    const initial_infection_rate = 0.001
-    const transmission_rate = 0.7
-    const vaccine_transmission_rate = 0.01
-    const vaccine_taking_rate = 0.00003
-    const double_days = 4
-    const infected_time = 10
-    const post_time=13
-    const vaccine_shield_days = 360
-    const D = 3
+    const infect_rate = 0.0001
+    const initial_infection_rate = 0.0001
+    const transmission_rate = 0.9
+    const vaccine_transmission_rate = 0.05
+    const vaccine_taking_rate = 0.0002
+    const double_days = 1
+    const infected_time = 4
+    const post_time=30
+    const vaccine_shield_days = 100
+    const D = 1
     const gridx = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
     const gridy = Math.round(Math.sqrt(N_CLONES)) * Math.round(Math.sqrt(N_CLONES))==N_CLONES?Math.round(Math.sqrt(N_CLONES)) : Math.round(Math.sqrt(N_CLONES))+1
 
@@ -31,11 +31,13 @@ function main(){
             grid[i].infected_time = 0
             grid[i].vaccine_days=0
             grid[i].double_days=0
+            grid[i].is_double=false
         }else{
             grid[i].type = "neutral"
             grid[i].infected_time = 0
             grid[i].vaccine_days=0
             grid[i].double_days=0
+            grid[i].is_double=false
 
         }
     }
@@ -75,15 +77,20 @@ function main(){
                 if (your_mate.type == "infected" && you.type=="neutral" && Math.random() < transmission_rate){
                     you.type = "infected"
                 }
-                // if (your_mate.type == "infected" && you.type=="infected"){
-                //     you.type = "double"
-                // }
+
+                if (your_mate.type == "infected" && you.type=="infected"){
+                    you.is_double = true
+                }
                 // TODo
                 if (you.type=="double"){
                     you.double_days++
                     if (you.double_days==double_days){
+                        you.is_double=false
                         you.type="unneutral"
                         you.double_days=0
+                        you.infected_time=0
+                    }else{
+                        you.infected_time-=1
                     }
                 }
                 if (your_mate.type == "infected" && you.type=="vaccine" && Math.random() < vaccine_transmission_rate){
@@ -136,7 +143,7 @@ function main(){
                     if (el.type=="neutral"){
                         row.push("neutral")
                     }
-                    if (el.type=="infected"){
+                    if (el.type=="infected"&& !el.is_double){
                         row.push("infected")
                     }
                     if (el.type=="post"){
@@ -148,8 +155,9 @@ function main(){
                     if (el.type=="vaccine"){
                         row.push("vaccine")
                     }
-                    if (el.type=="double"){
+                    if (el.is_double && el.type=="infected"){
                         row.push("double")
+                        console.log("dob");
                     }
 
                 }
