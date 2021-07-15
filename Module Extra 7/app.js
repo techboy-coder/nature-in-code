@@ -9,7 +9,7 @@ var frame_objects=[]
 var all_connecters=[]
 var all_tops=[]
 var all_bottoms=[]
-var len = 300
+var len = 200
 for (let i = 0; i < len; i++){
     var pos_x = -len+i*30
     var x = Math.PI/2*i/3
@@ -41,17 +41,17 @@ tops = two.makeGroup(all_tops)
 connecters = two.makeGroup(all_connecters)
 bottoms = two.makeGroup(all_bottoms)
 console.log(connecters.getBoundingClientRect());
-var n = 0
+var n = 1
 var target=12
 two.bind('update', function(frameCount) {
-    if (frameCount%20==0){
-        // tops.translation.x+=n&target?30:-target*30
-        // bottoms.translation.x+=n<target?30:-30*target
-        // connecters.translation.x+=n<target?30:-30*target
-        console.log(target);
+    if (frameCount%5==0){
+        tops.translation.x+=n%target?30:-target*30
+        bottoms.translation.x+=n%target?30:-target*30
+        connecters.translation.x+=n%target?30:-target*30
+        // console.log(n);
         n++
-        if (n==target){
-            n=0
+        if (n==target+1){
+            n=1
         }
     }
 }).play();  // Finally, start the animation loop
