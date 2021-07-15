@@ -1,7 +1,7 @@
 # Nature, In Code
 
-This a repo contains the projects and code for the summer camp in Laussane.
-
+This a repo contains the projects and code for the summer camp in EPFL, Laussane.
+It was created in a summer camp called "biology in code". 
 ## Photos:
 
 ### Module 1:
